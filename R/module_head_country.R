@@ -1,0 +1,57 @@
+uiHeadCountry <- function(id){
+  tagList(
+    
+    uiOutput(NS(id,'head_country'))
+  )
+  
+}
+
+
+
+#server -----------------------------------------------------------------------
+
+serverHeadCountry <-  function(id, world, country, data_map) {
+  moduleServer(id, function(input, output, session) {
+    
+    flag <- reactive({
+      
+      iso2 <- world$iso2[world$Country == country()]
+      flag <- glue::glue("flags/{iso2}.png")
+      
+      flag
+      
+    })
+    
+    
+    output$head_country <- renderUI({
+      
+      
+      exists_in_map <- sum(data_map()$Country == country())
+      
+      print(exists_in_map)
+      print(flag())
+      #!is.null(data_country() & 
+      if(exists_in_map > 0){
+        
+        tags$div(class = "container-header-country",
+          tags$img(src = flag(), class = "flag"),
+          h1(class = "title_country",country())
+        )
+        
+        
+      } else {
+        
+        h1(class = "title_country", "This combination of components and themes is not implemented in any country")
+        
+      }
+      
+     
+      
+      
+    })
+    
+    
+    
+    
+    
+  })}
