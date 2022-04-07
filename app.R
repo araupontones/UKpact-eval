@@ -23,12 +23,13 @@ ui <- fluidPage(
     
     tags$img(src = "logos/ukpact.svg", class = "pact-logo"),
     tags$h1(class = "text-logo", " - Evaluation")
+  
   ),
   
   fluidRow(
      sidebarLayout(
         
-        sidebarPanel(
+        sidebarPanel( class = "form",
            
            uiSideBar("sideBar", v_components, v_themes),
            
@@ -46,7 +47,10 @@ ui <- fluidPage(
      
   )),
   
-  uiDataCountry('table_country')
+  fluidRow(
+    uiDataCountry('table_country')
+  )
+ 
   
 )
 
@@ -71,7 +75,7 @@ server <- function(input, output, session) {
  
  #head of table with flag and name of country ---------------------------------
  
- serverHeadCountry("head_country", world, country, data_map)
+ serverHeadCountry("head_country", world, country, data_map, data_country, selected)
  
 #table for country data -------------------------------------------------------
  
@@ -100,7 +104,7 @@ server <- function(input, output, session) {
  
  observe({
     
-    print(selected())
+    #print(selected())
  })
 }
 

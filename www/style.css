@@ -1,10 +1,30 @@
+:root{
+  --btn-color: #3E0B08;
+  --country-title-color: white;
+  --form-bg-color: #001E62;
+  --form-multselect-bg: #DC4234;
+  --form-multselect-text: white;
+  --selectize-dropdown-content: #DC4234;
+  --form-text-color: white;
+  --navbar-border-color: #F0A85C;
+
+  
+}
+
+
+.row{
+  padding: 0 15px;
+}
+
 /*container logo ------------------------------------------------------------*/
 
 .container-logo{
-  margin-bottom: 20px;
   border-bottom: 4px solid #001E62 ;
+  margin: 0 15px 15px 15px;
+  padding: 15px 0;
   text-align: center;
 }
+
 
 .pact-logo{
   width: 250px;
@@ -19,10 +39,53 @@
   margin: 0;
   vertical-align: middle;
 }
+
+
+/*Form ------------------------------------------------------------------------*/
+.form{
+  background-color: var(--form-bg-color);
+  border: 1px solid var(--form-bg-color);
+  color:var(--form-text-color);
+  font-family: 'Noto Sans', sans-serif;
+    
+}
+
+input[checked] {
+  background-color: yellow;
+}
+
+  
+/*colors of single selects */
+  .selectize-control.single,.selectize-input,.selectize-dropdown {
+    color: var(--form-text-color) !important;
+  }
+  
+
+/*colors of multiple selects*/  
+  .selectize-control.multi .selectize-input > div {
+    cursor: pointer;
+    margin: 0 3px 3px 0;
+    padding: 1px 3px;
+    background: var(--form-multselect-bg) !important;
+    color: var(--form-multselect-text) !important;
+    border: 0 solid rgba(0, 0, 0, 0);
+}
+  
+  .selectize-dropdown-content{
+    color: var(--selectize-dropdown-content);
+  }
+  
+  .option:hover,.active{
+    background-color: var(--form-multselect-bg) !important;
+    color:var(--form-multselect-text) !important ;
+  }
+
+
+
 /*flag and name of country ----------------------------------------------------*/
 .container-header-country{
   
-  margin-top: 100px;
+  margin-top: 40px;
   text-align: center;
   
 }
@@ -34,7 +97,7 @@
 }
 
 .title_country{
-  color: #001E62;
+  color: var(--country-title-color);
   font-family: 'Mulish', sans-serif;
   font-weight: 800;
   text-transform: uppercase;
@@ -58,3 +121,10 @@
 
     display: none !important;
   }
+
+
+/*Table ---------------------------------------------------------------------------*/
+.rt-th-content{
+  color: var(--form-bg-color) !important;
+  font-weight: 700 !important;
+}

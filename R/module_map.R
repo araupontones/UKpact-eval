@@ -2,7 +2,7 @@ uiMap <- function(id){
   
   tagList(
     
-    leafletOutput(NS(id,'map'), height = 600)
+    leafletOutput(NS(id,'map'), height = 480)
     
   )
 }
@@ -33,8 +33,9 @@ serverMap <-  function(id, data_map, world, palette_map) {
                                      maxZoom=2)) %>%
         addPolygons(fillColor = "gray",
                     color = "white",
+                    layerId = ~ Country,
                     weight = 1) %>%
-        setView(zoom = 2, lng = 0, lat = 30)
+        setView(zoom = 2, lng = 0, lat = 10)
     })
     
     
