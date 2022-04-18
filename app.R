@@ -30,8 +30,8 @@ ui <- fluidPage(
   ),
   
   fluidRow(
+    shinycssloaders::withSpinner(uiMap('map'))
     
-    uiMap('map')
   
  
   
