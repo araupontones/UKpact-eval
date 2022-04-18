@@ -5,7 +5,11 @@ library(dplyr)
 library(tidyr)
 library(stringr)
 exfile <- "data/app/projects.rds"
-raw_data <- rio::import("data/reference/themes_by_compoment_long.xlsx")
+raw_data <- rio::import("C:/repositaries/1.work/pact/kpis/data_report/themes_by_compoment_long.xlsx")
+
+
+
+View(raw_data)
 
 #clean it ---------------------------------------------------------------------
 names(raw_data)
