@@ -11,7 +11,6 @@ links <- app_data %>%
   group_by(Country,Component, Theme) %>%
   summarise(value = n()) %>%
   filter(Country == countries[[5]]) %>%
-  mutate(Theme2 = glue::glue('<img src="www/icons/{Theme}.svg">')) %>%
   rename(source = Component, 
          target = Theme)
   
@@ -35,4 +34,4 @@ p <- sankeyNetwork(Links = links, Nodes = nodes,
                    sinksRight=FALSE)
 
 p
-?sankeyNetwork
+

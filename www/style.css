@@ -1,6 +1,6 @@
 :root{
   --btn-color: #3E0B08;
-  --country-title-color: white;
+  --country-title-color:  #001E62;
   --form-bg-color: #001E62;
   --form-multselect-bg: #DC4234;
   --form-multselect-text: white;
@@ -98,6 +98,8 @@ input[checked] {
 
 .title_country{
   color: var(--country-title-color);
+  display: inline;
+  margin: auto 10px;
   font-family: 'Mulish', sans-serif;
   font-weight: 800;
   text-transform: uppercase;
@@ -127,4 +129,37 @@ input[checked] {
 .rt-th-content{
   color: var(--form-bg-color) !important;
   font-weight: 700 !important;
+}
+
+.rt-tr{
+  font-size: 11px;
+}
+
+/*Dialog------------------------------------*/
+.modal-dialog{
+  margin:auto;
+  width: 90%;
+  height: 80%;
+}
+
+text[text-anchor="start"] {
+  color: var(--country-title-color) !important;
+  font-family: 'Noto Sans', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+ 
+}
+
+
+.sankeyNetwork svg{
+  width: 60% !important;
+  height: 100% !important;
+}
+
+.title-bens{
+  text-align: center;
+  font-weight: bold;
+  color: var(--country-title-color);
+  margin-bottom: 60px;
+  margin-top: 50px;
 }

@@ -17,7 +17,7 @@ check_countries <- raw_data %>%
   select(Country) %>%
   left_join(select(raw_shape, c(Country, iso2)), by = "Country")
 
-
+View(raw_shape)
 #all countries match with the data!!!
 
 

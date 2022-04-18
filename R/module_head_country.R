@@ -10,87 +10,51 @@ uiHeadCountry <- function(id){
 
 #server -----------------------------------------------------------------------
 
-serverHeadCountry <-  function(id, world, country, data_map, data_country, selected) {
+serverHeadCountry <-  function(id, country, projects_map) {
   moduleServer(id, function(input, output, session) {
     
     
     #fetch flag of slected country    
     flag <- reactive({
       
-      iso2 <- world$iso2[world$Country == country()]
+      iso2 <- projects_map$iso2[projects_map$Country == country()]
       flag <- glue::glue("flags/{iso2}.png")
       
       flag
       
     })
     
-    #get the number of projects for this combination
+    
     projects <- reactive({
       
-      nrow(data_country())
+      projects <- projects_map$projects[projects_map$Country == country()]
+    
+      projects
+      })
+    
+    
+    components <- reactive({
       
+      components <- projects_map$components[projects_map$Country == country()]
+      
+      components
     })
     
     
-    #reactive text for selected country
-    #start with Select a countyr
-    text_selected <- reactiveVal(  
-      h1(class = "title_country", "Select a country") 
+    themes <- reactive({
+      
+      themes <- projects_map$themes[projects_map$Country == country()]
+      
+      themes
+    })
+    
+   
+    list(
+      flag = flag,
+      projects = projects,
+      components  = components,
+      themes = themes
     )
-    
-    
-    
-    
-    #change it based on selected country
-    observe({
-      
-      exists_in_map <- sum(data_map()$Country == country())
-      
-      
-      
-      
-      if(exists_in_map > 0){
-        
-        text_selected(
-          tags$div(class = "container-header-country",
-                   tags$img(src = flag(), class = "flag"),
-                   h1(class = "title_country",country()),
-                   h3(glue::glue('{projects()} Projects' ))
-          )
-        )
-        
-        
-      } else if(nrow(data_map()) >0){
-        text_selected(
-          h1(class = "title_country", "Select a country") 
-        )
-        
-        
-        
-      } else {
-        text_selected(
-          h1(class = "title_country", "This combination of components and themes is not implemented in any country")
-        )
-        
-      }
-      
-    })
-    
-    
-    
-    
-    
-    output$head_country <- renderUI({
-      
-      
-      
-      text_selected()
-      
-      
-      
-    })
-    
-    
     
     
     
