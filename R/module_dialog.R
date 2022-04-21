@@ -1,4 +1,4 @@
-serverDialog <-  function(id, country, country_info, sankey, bens) {
+serverDialog <-  function(id, country, country_info, sankey, bens, timevis) {
   moduleServer(id, function(input, output, session) {
     
   
@@ -71,8 +71,9 @@ serverDialog <-  function(id, country, country_info, sankey, bens) {
         fade = FALSE,
          fluidRow(
           column(6, sankey()),
-          column(6, 
-                 
+          column(6,
+                 h4( class = 'title-bens', "Start dates of components:"),
+                 timevis(),
                    h4( class = 'title-bens',
                      paste( bens_synergy()$bens_text,
                             "supported in the same theme by more than one component."

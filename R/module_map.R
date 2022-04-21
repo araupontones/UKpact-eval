@@ -10,12 +10,25 @@ uiMap <- function(id){
 
 #server -----------------------------------------------------------------------
 
-serverMap <-  function(id, projects_map, world, palette_map) {
+serverMap <-  function(id, projects_map, world, palette_map,app_data) {
   moduleServer(id, function(input, output, session) {
     
     
     
     pallete_map <- reactive({
+      
+      colorFactor(rev(blue_palette), projects_map$components)
+      
+      # colorNumeric(
+      #   rev(blue_palette),
+      #   domain = projects_map$components)
+      
+    })
+    
+    
+    pallete_circles <- reactive({
+      
+      
       
       colorNumeric(
         rev(blue_palette),
@@ -35,62 +48,66 @@ serverMap <-  function(id, projects_map, world, palette_map) {
                     color = "white",
                     #layerId = ~ Country,
                     weight = 1)  %>%
+        
+        #Pact countries ------------------------------------------
         addPolygons(data = projects_map,
-                    color = "black",
-                    fillColor =  ~ pallete_map()(projects),
+                    color = "white",
+                    fillColor =  ~ pallete_map()(components),
                     fillOpacity = 1,
-                    group = "A",
-                    label = ~ Country,
-                    layerId = ~ Country,
+                    #label = ~ projects,
+                    #labelOptions = list(permanent = TRUE),
+                    #layerId = ~ Country,
                     weight = 1) %>%
-        addLegend("bottomright",
+       
+       #number of projects 
+        addCircleMarkers(data = projects_map,
+                   lat = ~ latitude,
+                   lng = ~ longitude,
+                   fillColor =  ~ pallete_circles()(projects),
+                   color = red_pact,
+                   radius = projects_map$projects,
+                   group = "circles"
+                   ) %>% 
+        
+        # #add markers
+       
+        addLabelOnlyMarkers(
+          data = projects_map,
+          lat = ~ latitude,
+          lng = ~ longitude,
+          label = ~ projects,
+          labelOptions = leaflet::labelOptions(
+            noHide = TRUE,
+            direction = "bottom",
+            textOnly = TRUE,
+            offset = c(0, -20),
+            opacity = 1,
+            color = "white"
+          )
+         
+        ) %>%
+        
+        #invisible polygons to click on
+        addPolygons(data = projects_map,
+                    # color = "white",
+                    weight = 0,
+                    fillOpacity = 0,
+                    layerId = ~ Country,
+                    
+        ) %>%
+        
+        
+        #legend ------------------------------------
+        addLegend("topright",
                   pal = pallete_map(),
-                  values = ~ projects_map$projects,
-                  title = "Projects",
+                  values = ~ projects_map$components,
+                  title = "Components",
                   opacity = 1) %>%
-        setView(zoom = 2, lng = 0, lat = 10)
+
+        setView(zoom = 7, lng = 0, lat = 18)
     })
     
-    # 
-    # #map reactive 
-    # observe({
-    #   proxy <- leafletProxy("map", data = world)
-    #   
-    #   #check if at least one country meets the target criteria (has all the attributes)
-    #   rows <- nrow(data_map())
-    #   
-    #   #remove map there's no country but create the map if it is
-    #   if(rows == 0){
-    #     
-    #     proxy %>%
-    #       clearControls() %>%
-    #       clearGroup("A") 
-    #   } else {
-    #     
-    #     proxy %>%
-    #       clearControls() %>%
-    #       clearGroup("A") %>%
-    #       addPolygons(data = data_map(),
-    #                   color = "black",
-    #                   fillColor =  ~ pallete_map()(projects),
-    #                   fillOpacity = 1,
-    #                   group = "A",
-    #                   label = ~ Country,
-    #                   layerId = ~ Country,
-    #                   weight = 1)
-    #     
-    #     # addLegend(pal = pallete_map(),
-    #     #           values = ~ rev(data_map()$projects),
-    #     #           title = "Projects",
-    #     #           labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
-    #     #           )
-    #     
-    #     
-    #   }
-    #   
-    # })
-    
-    
+   
     
     
     

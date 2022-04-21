@@ -6,13 +6,13 @@ library(tidyr)
 library(stringr)
 exfile <- "data/app/projects.rds"
 raw_data <- rio::import("C:/repositaries/1.work/pact/kpis/data_report/themes_by_compoment_long.xlsx")
+world <- rio::import("data/shapefile/worldSF.rds") %>% sf::st_as_sf()
 
 
 
-View(raw_data)
 
 #clean it ---------------------------------------------------------------------
-names(raw_data)
+
 clean_data <- raw_data %>%
 pivot_longer(starts_with("Component"),
              names_to = "Component") %>%
@@ -22,7 +22,12 @@ pivot_longer(starts_with("Component"),
   select(-value) %>%
   #remove Component from components to make it nicer in the dash
   mutate(Component = str_remove(Component, "Component [0-9]: "),
-         Component = str_to_title(Component))
+         Component = str_to_title(Component),
+         Component = case_when(Component %in% c("Skills Shares","Secondments") ~
+                                 "Skills Shares & Secondments",
+                               T ~ Component)
+         ) %>%
+  left_join(world)
 
 
 

@@ -3,10 +3,11 @@
 library(dplyr)
 
 exfile <- "data/app/projects_by_country.rds"
+exfile_components <- "data/app/components_by_country.rds"
 app_data <- rio::import("data/app/projects.rds")
 world <- rio::import("data/shapefile/worldSF.rds") %>% sf::st_as_sf()
 
-names(app_data)
+View(app_data)
 #group data -------------------------------------------------------------------
 projects_country <- app_data %>%
   group_by(Country) %>%
@@ -16,8 +17,7 @@ projects_country <- app_data %>%
             .groups = 'drop'
   ) %>%
            
-  filter(Country != "Multi-country") %>%
-  left_join(world)
+  filter(Country != "Multi-country") 
 
 
 
@@ -26,4 +26,3 @@ projects_country <- app_data %>%
 rio::export(projects_country, exfile)
 
 
-#View(projects_country)

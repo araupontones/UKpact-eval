@@ -4,15 +4,18 @@ library(shiny)
 library(dplyr)
 library(reactable)
 library(networkD3)
+library(timevis)
 
 
 #load data
+#Creted in R_/transform_raw_data_projects_to_app.R
 app_data <- rio::import("data/app/projects.rds")
 bens_data <- rio::import("data/reference/beneficiaries_synergies.xlsx")
 #sum_data <- rio::import("data/app/projects_group.rds")
 world <- rio::import("data/shapefile/worldSF.rds") %>% sf::st_as_sf()
-projects_country <- rio::import("data/app/projects_by_country.rds") %>% sf::st_as_sf()
 
+#Created in R_/count_projects_country
+projects_country <- rio::import("data/app/projects_by_country.rds") %>% sf::st_as_sf()
 
 #create vectors for selectors
 v_components <- sort(unique(app_data$Component))
@@ -30,7 +33,7 @@ ui <- fluidPage(
   ),
   
   fluidRow(
-    shinycssloaders::withSpinner(uiMap('map'))
+    shinycssloaders::withSpinner(uiMap('map'), color = red_pact)
     
   
  
@@ -48,7 +51,8 @@ server <- function(input, output, session) {
 #reactive map ------------------------------------------------------------------
 #returns selected country in the map
 
-   country <- serverMap("map", projects_map = projects_country, world, palette_map = blue_palette)
+   country <- serverMap("map", projects_map = projects_country, world, 
+                        palette_map = blue_palette, app_data)
    
    #returns flag, projects, components, themes by country
    country_info <- serverHeadCountry("head_country",projects_map = projects_country ,country)
@@ -59,49 +63,16 @@ server <- function(input, output, session) {
    #sankey chart by theme
    sankey <- serverSankey("map", country, app_data) 
    
+   timevis <- serverTimeVis("map", country, app_data)
+   
 #summary of country as a dialig
-   serverDialog('map', country, country_info, sankey, bens)
+   serverDialog('map', country, country_info, sankey, bens, timevis)
    
 
-#data for country selected country in the map-----------------------------------
- 
- #data_country <- data_country_server("sideBar", app_data, country)
-
- 
- 
- #head of table with flag and name of country ---------------------------------
- 
- #serverHeadCountry("head_country", world, country, data_map, data_country, selected)
- 
-#table for country data -------------------------------------------------------
- 
-# serverCountryTable("table_country", data_map, country, data_country)
     
  
  
  
- 
- # 
- # 
- # #table to test the data ======================================================
- # output$table <- reactable::renderReactable({
- #   
- #   data_table <- data_map() %>% as.data.frame() %>% select(Country, projects)
- #   
- #   
- #   reactable::reactable(data_table,
- #                        selection = "single",
- #                        onClick = "select")
- # })
- # 
- # 
- # #to capture selection of the table
- # selected <- reactive(getReactableState("table", "selected"))
- # 
- # observe({
- #    
- #    #print(selected())
- # })
 }
 
 shinyApp(ui, server)

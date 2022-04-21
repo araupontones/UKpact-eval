@@ -6,3 +6,6 @@ blue_palette <- c("#002244",
                   "#A3DAFF",
                   "#CDE7F9"
                   )
+
+red_pact <- "#DC4234"
+blue_uk <- "#001E62"

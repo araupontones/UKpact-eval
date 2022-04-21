@@ -41,45 +41,6 @@
 }
 
 
-/*Form ------------------------------------------------------------------------*/
-.form{
-  background-color: var(--form-bg-color);
-  border: 1px solid var(--form-bg-color);
-  color:var(--form-text-color);
-  font-family: 'Noto Sans', sans-serif;
-    
-}
-
-input[checked] {
-  background-color: yellow;
-}
-
-  
-/*colors of single selects */
-  .selectize-control.single,.selectize-input,.selectize-dropdown {
-    color: var(--form-text-color) !important;
-  }
-  
-
-/*colors of multiple selects*/  
-  .selectize-control.multi .selectize-input > div {
-    cursor: pointer;
-    margin: 0 3px 3px 0;
-    padding: 1px 3px;
-    background: var(--form-multselect-bg) !important;
-    color: var(--form-multselect-text) !important;
-    border: 0 solid rgba(0, 0, 0, 0);
-}
-  
-  .selectize-dropdown-content{
-    color: var(--selectize-dropdown-content);
-  }
-  
-  .option:hover,.active{
-    background-color: var(--form-multselect-bg) !important;
-    color:var(--form-multselect-text) !important ;
-  }
-
 
 
 /*flag and name of country ----------------------------------------------------*/
@@ -101,7 +62,7 @@ input[checked] {
   display: inline;
   margin: auto 10px;
   font-family: 'Mulish', sans-serif;
-  font-weight: 800;
+  font-weight: 100;
   text-transform: uppercase;
 }
 
@@ -111,6 +72,7 @@ input[checked] {
 /*Leaflet ---------------------------------------------------------------------*/
 
 .leaflet-container{
+  height: 80vh;
   background-color: white !important;
   border: 3px solid white;
   border-radius: 20px;
@@ -124,6 +86,9 @@ input[checked] {
     display: none !important;
   }
 
+.leaflet-tooltip {
+  color:white !important;
+}
 
 /*Table ---------------------------------------------------------------------------*/
 .rt-th-content{
@@ -135,11 +100,11 @@ input[checked] {
   font-size: 11px;
 }
 
-/*Dialog------------------------------------*/
+/*Dialog--------------------------------------------------------------------*/
 .modal-dialog{
   margin:auto;
   width: 90%;
-  height: 80%;
+  height: 70%;
 }
 
 text[text-anchor="start"] {
@@ -160,6 +125,15 @@ text[text-anchor="start"] {
   text-align: center;
   font-weight: bold;
   color: var(--country-title-color);
+  font-weight: 100;
+  /*
   margin-bottom: 60px;
   margin-top: 50px;
+  */
+}
+
+.timevis{
+  width: 100% !important;
+  height: 10% !important;
+  margin-bottom: 60px !important;
 }
